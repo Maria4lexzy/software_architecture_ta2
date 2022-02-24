@@ -7,23 +7,17 @@ on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build-and-deploy-job:
     runs-on: ubuntu-latest
     steps:
-       - uses: actions/checkout@v2
-       - name: Login to container registry
-         run: |
+      - uses: actions/checkout@v2
+      - name: Login to container registry
+        run: |
           docker login https://ghcr.io -u ${{ secrets.DOCKER_USERNAME}} -p ${{ secrets.DOCKER_KEY}}
-       - name: Build and push image to registry
-         run: |
+      - name: Build and push image to registry
+        run: |
           docker buildxbuild --push -t ${{ secrets.DOCKER_TAG}} .
 
  
